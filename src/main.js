@@ -8,6 +8,14 @@ import "./plugins/element.js";
 import "./assets/font-awesome/css/font-awesome.min.css";
 
 axios.defaults.baseURL = "http://127.0.0.1:8888/api/private/v1/";
+
+// 请求拦截器，设置统一的请求头
+axios.interceptors.request.use((config) => {
+  config.headers.Authorization = sessionStorage.getItem("token");
+  // 必须return出去
+  return config;
+});
+
 Vue.config.productionTip = false;
 Vue.prototype.axios = axios;
 

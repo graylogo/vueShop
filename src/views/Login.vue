@@ -119,7 +119,7 @@ export default {
       justify-content: flex-end;
       align-items: center;
       width: 100%;
-      height: 80%;
+      height: 95%;
       .el-form {
         width: 100%;
       }
