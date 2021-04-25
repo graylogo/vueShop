@@ -3,7 +3,7 @@
 
 module.exports = {
   // 修改打包路径为相对路径
-  publicPath: "./",
+  //   publicPath: "./",
   configureWebpack: {
     devServer: {
       port: 8086, // 端口号

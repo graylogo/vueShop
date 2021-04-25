@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     logOut() {
-      sessionStorage.removeItem("token");
+      sessionStorage.clear();
       this.$router.push("/login");
       this.$message.warning("退出登陆！");
     },
@@ -96,7 +96,7 @@ export default {
     },
     getActiveIndex() {
       const active = sessionStorage.getItem("active");
-      this.activeIndex = active ? active : "users";
+      this.activeIndex = active;
     },
     changeCollapse() {
       this.isCollapse = !this.isCollapse;
@@ -139,11 +139,10 @@ export default {
         }
       }
     }
-
     .el-main {
       background-color: #e9eef3;
       color: #333;
-      line-height: 160px;
+      //   line-height: 160px;
     }
   }
 }

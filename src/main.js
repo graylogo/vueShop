@@ -16,6 +16,10 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+// TODO  1. 断网处理？？？
+
+// TODO 2. 全局的加载动画
+
 Vue.config.productionTip = false;
 Vue.prototype.axios = axios;
 
