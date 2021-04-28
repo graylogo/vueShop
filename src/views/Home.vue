@@ -3,11 +3,15 @@
     <el-container>
       <el-header>
         <el-row>
-          <el-col :span="22">
+          <el-col :span="23">
             <h2>XXX后台管理系统</h2>
           </el-col>
-          <el-col :span="2">
-            <el-button @click="logOut" type="warning" class="logout-btn"
+          <el-col :span="1">
+            <el-button
+              @click="logOut"
+              size="mini"
+              type="info"
+              class="logout-btn"
               >退出</el-button
             >
           </el-col>
@@ -18,7 +22,10 @@
           <div class="isCollapse" @click="changeCollapse">
             <span>| | |</span>
           </div>
-          <!-- collapse-transition  没有生效 -->
+          <!-- 自定义颜色 -->
+          <!-- background-color="#fff"
+            text-color="#ccc"
+            active-text-color="#409EFF" -->
           <el-menu
             :default-active="activeIndex"
             :collapse-transition="false"
@@ -28,6 +35,8 @@
             :collapse="isCollapse"
           >
             <el-submenu
+              :show-timeout="100"
+              :hide-timeout="100"
               :index="item.path"
               v-for="item of menuList"
               :key="item.id"
@@ -111,10 +120,11 @@ export default {
     height: 100%;
     .el-header {
       background-color: #b3c0d1;
+      height: 44px !important;
       color: #333;
-      line-height: 60px;
+      line-height: 44px;
       h2 {
-        font-size: 26px;
+        font-size: 22px;
       }
     }
     .el-aside {
@@ -127,7 +137,7 @@ export default {
         margin-right: 10px;
       }
       .isCollapse {
-        height: 20px;
+        height: 2%;
         line-height: 20px;
         text-align: center;
         cursor: pointer;
@@ -142,6 +152,9 @@ export default {
       background-color: #e9eef3;
       color: #333;
       //   line-height: 160px;
+    }
+    .el-menu-vertical {
+      height: 98%;
     }
   }
 }

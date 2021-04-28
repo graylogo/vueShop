@@ -13,6 +13,6 @@ html,body,#app{
     margin: 15px 0;
 }
 .el-card{
-    height: calc(100vh - 132px);
+    height: calc(100vh - 116px);
     overflow: scroll!important;
 }

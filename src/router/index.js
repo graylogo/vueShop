@@ -38,6 +38,36 @@ const routes = [
         name: "rights",
         component: () => import("../views/Rights.vue"),
       },
+      // 商品列表
+      {
+        path: "/goods",
+        name: "goods",
+        component: () => import("../views/Goods.vue"),
+      },
+      // 分类参数
+      {
+        path: "/params",
+        name: "params",
+        component: () => import("../views/Params.vue"),
+      },
+      // 商品分类
+      {
+        path: "/categories",
+        name: "categories",
+        component: () => import("../views/Categories.vue"),
+      },
+      // 订单列表
+      {
+        path: "/orders",
+        name: "orders",
+        component: () => import("../views/Orders.vue"),
+      },
+      // 数据报表
+      {
+        path: "/reports",
+        name: "reports",
+        component: () => import("../views/Reports.vue"),
+      },
     ],
   },
 ];

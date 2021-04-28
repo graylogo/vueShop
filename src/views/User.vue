@@ -37,7 +37,7 @@
         :data="tableData"
         border
         style="width: 100%"
-        height="calc(100vh - 260px)"
+        height="calc(100vh - 245px)"
       >
         <el-table-column
           type="index"
