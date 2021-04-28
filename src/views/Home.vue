@@ -89,7 +89,6 @@ export default {
     async getAsideList() {
       const { data: res } = await this.axios.get("menus");
       this.menuList = res.data;
-      console.log(this.menuList);
     },
     setActiveIndex(path) {
       sessionStorage.setItem("active", path);

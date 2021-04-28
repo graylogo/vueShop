@@ -33,6 +33,11 @@ const routes = [
         name: "roles",
         component: () => import("../views/Roles.vue"),
       },
+      {
+        path: "/rights",
+        name: "rights",
+        component: () => import("../views/Rights.vue"),
+      },
     ],
   },
 ];

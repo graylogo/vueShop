@@ -71,20 +71,68 @@
         </el-table-column>
         <el-table-column prop="create_time" label="创建时间" align="center">
         </el-table-column>
-        <el-table-column label="操作" align="center" width="260px">
+        <el-table-column label="操作" align="center" width="300px">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="handleEdit(scope.row)"
               >编辑</el-button
             >
-            <el-button
-              size="mini"
-              type="danger"
-              @click="handleDelete(scope.row)"
-              >删除</el-button
+            <el-popconfirm
+              confirm-button-text="好的"
+              cancel-button-text="不用了"
+              icon="el-icon-info"
+              icon-color="red"
+              title="确定删除吗？"
+              @confirm="handleDelete(scope.row)"
             >
-            <el-button size="mini" type="warning" @click="distribute(scope.row)"
-              >分配权限</el-button
+              <el-button size="mini" type="danger" slot="reference"
+                >删除</el-button
+              >
+            </el-popconfirm>
+
+            <el-popover
+              placement="top"
+              trigger="manual"
+              width="320"
+              v-model="scope.row.visiable"
             >
+              <el-row type="flex" justify="space-between">
+                <el-col>
+                  <el-select
+                    v-model="roleId"
+                    placeholder="请选择"
+                    style="width: 180px"
+                  >
+                    <el-option
+                      v-for="item in roleList"
+                      :key="item.id"
+                      :label="item.roleName"
+                      :value="item.id"
+                    >
+                    </el-option>
+                  </el-select>
+
+                  <el-button
+                    type="primary"
+                    size="mini"
+                    @click="submitEnter(scope.row)"
+                    >确定</el-button
+                  >
+                  <el-button
+                    size="mini"
+                    type="info"
+                    @click="scope.row.visiable = false"
+                    >取消</el-button
+                  >
+                </el-col>
+              </el-row>
+              <el-button
+                size="mini"
+                type="warning"
+                slot="reference"
+                @click="distribute(scope.row)"
+                >分配角色</el-button
+              >
+            </el-popover>
           </template>
         </el-table-column>
       </el-table>
@@ -204,6 +252,8 @@ export default {
         email: "",
         mobile: "",
       },
+      roleId: "",
+      roleList: [],
       rules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
@@ -228,11 +278,15 @@ export default {
   },
   created() {
     this.getUserList();
+    this.getRoles();
   },
   methods: {
     async getUserList() {
       const { data: res } = await this.axios.get("users", {
         params: this.params,
+      });
+      res.data.users.forEach((item) => {
+        item.visiable = false;
       });
       this.totalNum = res.data.total;
       this.tableData = res.data.users;
@@ -259,7 +313,6 @@ export default {
     },
     handleEdit(row) {
       this.axios.get(`users/${row.id}`).then(({ data: res }) => {
-        console.log(res, "aaa");
         this.editDialog.id = res.data.id;
         this.editDialog.username = res.data.username;
         this.editDialog.email = res.data.email;
@@ -276,9 +329,6 @@ export default {
         this.$message.success(res.meta.msg);
         this.getUserList();
       });
-    },
-    distribute(row) {
-      console.log(row);
     },
     submitEdit() {
       this.axios
@@ -307,6 +357,37 @@ export default {
     closeDialog(name) {
       this.$refs[name].resetFields();
     },
+    // 分配角色确定
+    submitEnter(row) {
+      this.axios
+        .put(`users/${row.id}/role`, { rid: this.roleId })
+        .then(({ data: res }) => {
+          if (res.meta.status !== 200) {
+            this.$message.error(res.meta.msg);
+            return false;
+          }
+          this.$message.success(res.meta.msg);
+          row.visiable = false;
+          this.getUserList();
+        });
+    },
+    // 点击分配权限
+    distribute(row) {
+      this.roleId = "";
+      for (let item of this.tableData) {
+        if (item.id === row.id) {
+          item.visiable = true;
+        } else {
+          item.visiable = false;
+        }
+      }
+    },
+    // 获取角色列表
+    getRoles() {
+      this.axios.get("roles").then(({ data: res }) => {
+        this.roleList = res.data;
+      });
+    },
   },
 };
 </script>
@@ -322,7 +403,7 @@ export default {
     width: 300px;
   }
 }
-// .el-table {
-//   overflow: scroll;
-// }
+.el-button {
+  margin: 0 5px;
+}
 </style>
