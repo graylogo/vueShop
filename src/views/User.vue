@@ -70,6 +70,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="create_time" label="创建时间" align="center">
+          <template slot-scope="scope">
+            <span>{{ scope.row.create_time | formateDate }}</span>
+          </template>
         </el-table-column>
         <el-table-column label="操作" align="center" width="300px">
           <template slot-scope="scope">
@@ -216,7 +219,18 @@
 </template>
 
 <script>
+import dayjs from "dayjs";
 export default {
+  // 使用dayjs 构建日期格式化过滤器
+  filters: {
+    //   time单位是s而不是ms
+    formateDate: function (time) {
+      if (!time) return "";
+      //  这里传入的是m，所以需要用Unix时间戳来解析
+      time = dayjs.unix(time).format("YYYY/MM/DD");
+      return time;
+    },
+  },
   data() {
     const checkEmail = (rule, value, callback) => {
       if (!value) return callback(new Error("邮箱不能为空！"));
