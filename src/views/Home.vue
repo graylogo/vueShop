@@ -97,7 +97,15 @@ export default {
     },
     async getAsideList() {
       const { data: res } = await this.axios.get("menus");
+      // 结局路由问题
+      res.data.forEach((item) => {
+        item.path = "/" + item.path;
+        item.children.forEach((i) => {
+          i.path = "/" + i.path;
+        });
+      });
       this.menuList = res.data;
+      console.log(this.menuList);
     },
     setActiveIndex(path) {
       sessionStorage.setItem("active", path);

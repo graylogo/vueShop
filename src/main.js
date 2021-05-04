@@ -16,6 +16,19 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+// 定义全局的时间过滤器
+Vue.filter("dateFormate", function (val) {
+  // 因为使用的是unix时间戳，所以要*1000
+  const date = new Date(val * 1000);
+  const y = date.getFullYear();
+  const m = (date.getMonth() + 1 + "").padStart(2, "0");
+  const d = (date.getDate() + "").padStart(2, "0");
+  const h = (date.getHours() + "").padStart(2, "0");
+  const mm = (date.getMinutes() + "").padStart(2, "0");
+  const s = (date.getSeconds() + "").padStart(2, "0");
+  return `${y}-${m}-${d} ${h}:${mm}:${s}`;
+});
+
 // TODO  1. 断网处理？？？
 
 // TODO 2. 全局的加载动画
