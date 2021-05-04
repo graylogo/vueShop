@@ -5,17 +5,31 @@
       <el-breadcrumb-item>订单管理</el-breadcrumb-item>
       <el-breadcrumb-item>订单列表</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-card class="box-card"> </el-card>
+    <el-card class="box-card">
+      <el-calendar v-model="date"> </el-calendar>
+    </el-card>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      date: new Date(),
+    };
   },
-  created() {},
-  methods: {},
+  created() {
+    // this.fetchData();
+  },
+  methods: {
+    //   TODO   修改后台代码，改正错误
+    // 接口报错，后台停止
+    // fetchData() {
+    //   this.axios.get("kuaidi/1106975712662").then(({ data: res }) => {
+    //     console.log(res);
+    //   });
+    // },
+  },
 };
 </script>
 
